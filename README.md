@@ -24,8 +24,9 @@ lasy is used for [plugins managment](https://github.com/folke/lazy.nvim)
 - [telescope](https://github.com/nvim-telescope/telescope.nvim)
 - [telescope-extension](https://github.com/nvim-telescope/telescope-fzf-native.nvim)
 
-### LSP
+### cmp + LSP
 
+- [nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
 - [UI for nvim-lsp progress](https://github.com/j-hui/fidget.nvim)
 - [better select/input UI](https://github.com/stevearc/dressing.nvim)
