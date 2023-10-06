@@ -9,7 +9,7 @@
 
 ## Plugins
 
-- [package manager](https://github.com/folke/lazy.nvim)
+- [plugins manager](https://github.com/folke/lazy.nvim)
 - [copilot](https://github.com/github/copilot.vim)
 - [color scheme](https://github.com/folke/tokyonight.nvim)
 - [comment string](https://github.com/numToStr/Comment.nvim)
