@@ -8,3 +8,4 @@ o.smartindent = true
 o.tabstop = 2
 o.shiftwidth = 2
 o.breakindent = true
+o.mouse = 'a'
