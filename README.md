@@ -9,17 +9,22 @@
 
 ## Plugins
 
-- [plugins manager](https://github.com/folke/lazy.nvim)
-- [copilot](https://github.com/github/copilot.vim)
+lasy is used for [plugins managment](https://github.com/folke/lazy.nvim)
 
+### General
+
+- [copilot](https://github.com/github/copilot.vim)
 - [tokyonight](https://github.com/folke/tokyonight.nvim)
 - [lualine](https://github.com/nvim-lualine/lualine.nvim)
-
 - [Comment](https://github.com/numToStr/Comment.nvim)
 - [indent-blankline](https://github.com/lukas-reineke/indent-blankline.nvim)
 
+### Tree search
+
 - [telescope](https://github.com/nvim-telescope/telescope.nvim)
 - [telescope-extension](https://github.com/nvim-telescope/telescope-fzf-native.nvim)
+
+### LSP
 
 - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
 - [UI for nvim-lsp progress](https://github.com/j-hui/fidget.nvim)
