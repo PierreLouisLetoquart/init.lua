@@ -38,7 +38,7 @@ return {
       },
       -- sources for completion
       sources = {
-        -- { name = 'nvim_lsp' },
+        { name = 'nvim_lsp' },
         { name = 'luasnip' }, -- snippets
         { name = 'buffer' }, -- text in buffer
         { name = 'path' }, -- file system paths

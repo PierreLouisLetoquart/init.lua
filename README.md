@@ -31,3 +31,6 @@ lasy is used for [plugins managment](https://github.com/folke/lazy.nvim)
 - [UI for nvim-lsp progress](https://github.com/j-hui/fidget.nvim)
 - [better select/input UI](https://github.com/stevearc/dressing.nvim)
 
+- [lsp etc installer](https://github.com/williamboman/mason.nvim)
+- [mason-lspconfig](https://github.com/williamboman/mason-lspconfig.nvim)
+
