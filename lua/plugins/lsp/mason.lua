@@ -22,11 +22,20 @@ return {
     mason_lspconfig.setup({
       -- list of the server for mason to install
       ensure_installed = {
+        -- cpp
         "clangd",
         "cmake",
+        -- basics
         "lua_ls",
         "marksman",
+        -- rust
         "rust_analyzer",
+        -- web
+        "tsserver",
+        "html",
+        "cssls",
+        "tailwindcss",
+        "emmet_ls",
       },
 
       -- automatically install the server if not found
