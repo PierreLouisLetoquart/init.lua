@@ -133,7 +133,7 @@ return {
       capabilities = capabilities,
       on_attach = on_attach,
     })
-    
+
     -- configure clangd language server
     lspconfig["clangd"].setup({
       capabilities = capabilities,
