@@ -121,5 +121,29 @@ return {
         },
       },
     })
+
+    -- configure rust_analyzer language server
+    lspconfig["rust_analyzer"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
+    -- configure markdown language server
+    lspconfig["marksman"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+    
+    -- configure clangd language server
+    lspconfig["clangd"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
+    -- configure cmake language server
+    lspconfig["cmake"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
   end,
 }
