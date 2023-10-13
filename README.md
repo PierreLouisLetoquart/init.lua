@@ -18,6 +18,7 @@ lasy is used for [plugins managment](https://github.com/folke/lazy.nvim)
 - [lualine](https://github.com/nvim-lualine/lualine.nvim)
 - [Comment](https://github.com/numToStr/Comment.nvim)
 - [indent-blankline](https://github.com/lukas-reineke/indent-blankline.nvim)
+- [auto brackets](https://github.com/windwp/nvim-autopairs)
 
 ### Tree search
 
