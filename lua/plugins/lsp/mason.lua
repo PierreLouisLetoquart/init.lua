@@ -30,6 +30,12 @@ return {
         "marksman",
         -- rust
         "rust_analyzer",
+        -- front
+        "cssls",
+        "html",
+        "jsonls",
+        "tsserver",
+        "tailwindcss",
       },
 
       -- automatically install the server if not found
