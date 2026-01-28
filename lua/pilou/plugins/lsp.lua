@@ -8,7 +8,6 @@ return {
 				"html",
 				"ruff",
 				"pyright",
-				"prettier",
 				"rust_analyzer",
 				"lua_ls",
 				"biome",
