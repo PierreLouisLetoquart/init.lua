@@ -30,9 +30,62 @@ return {
 
 		-- See `:help telescope.builtin`
 		local builtin = require("telescope.builtin")
+		local entry_display = require("telescope.pickers.entry_display")
+		local make_entry = require("telescope.make_entry")
+		local Path = require("plenary.path")
+		local utils = require("telescope.utils")
+
+		local filename_first_entry_maker = function(opts)
+			opts = opts or {}
+			local gen = make_entry.gen_from_file(opts)
+			local cwd = utils.path_expand(opts.cwd or vim.loop.cwd())
+			local disable_devicons = opts.disable_devicons
+
+			local displayer = entry_display.create({
+				separator = " ",
+				items = {
+					{ width = 2 },
+					{ width = opts.fname_width or 30 },
+					{ remaining = true },
+				},
+			})
+
+			local make_display = function(entry)
+				local full = entry.value
+				local abs = full
+				if not Path:new(full):is_absolute() then
+					abs = Path:new({ cwd, full }):absolute()
+				end
+				local rel = Path:new(abs):make_relative(cwd)
+				local filename = utils.path_tail(rel)
+				local parent = vim.fn.fnamemodify(rel, ":h")
+				if parent == "." then
+					parent = ""
+				end
+
+				local icon, icon_hl = utils.get_devicons(full, disable_devicons)
+				return displayer({
+					{ icon, icon_hl },
+					filename,
+					{ parent, "TelescopeResultsComment" },
+				})
+			end
+
+			return function(line)
+				local entry = gen(line)
+				entry.display = make_display
+				return entry
+			end
+		end
+
+		local find_files_filename_first = function(opts)
+			opts = opts or {}
+			opts.entry_maker = filename_first_entry_maker(opts)
+			builtin.find_files(opts)
+		end
 		vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
 		vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
-		vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
+		vim.keymap.set("n", "<leader>sf", find_files_filename_first, { desc = "[S]earch [F]iles" })
 		vim.keymap.set("n", "<leader>sb", builtin.buffers, { desc = "[S]earch [B]uffers" })
 		vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
 		vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
