@@ -17,8 +17,15 @@ return {
 			"vimdoc",
 			"python",
 			"typescript",
+			"tsx",
+			"toml",
 			"javascript",
+			"jsdoc",
+			"json",
+			"jsonc",
 			"rust",
+			"xml",
+			"yaml",
 		}
 		require("nvim-treesitter").install(filetypes)
 		vim.api.nvim_create_autocmd("FileType", {
