@@ -1,7 +1,6 @@
 return {
-	{ "williamboman/mason.nvim", opts = {} },
 	{
-		"williamboman/mason-lspconfig.nvim",
+		"neovim/nvim-lspconfig",
 		dependencies = {
 			{ "mason-org/mason.nvim", opts = {} },
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -19,9 +18,17 @@ return {
 						vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 					end
 
-					map("grn", vim.lsp.buf.rename, "[R]e[n]ame")
-					map("gra", vim.lsp.buf.code_action, "[G]oto Code [A]ction", { "n", "x" })
 					map("grD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+
+					local ok, builtin = pcall(require, "telescope.builtin")
+					if ok then
+						map("grr", builtin.lsp_references, "[G]oto [R]eferences")
+						map("gri", builtin.lsp_implementations, "[G]oto [I]mplementation")
+						map("grd", builtin.lsp_definitions, "[G]oto [D]efinition")
+						map("gO", builtin.lsp_document_symbols, "Open Document Symbols")
+						map("gW", builtin.lsp_dynamic_workspace_symbols, "Open Workspace Symbols")
+						map("grt", builtin.lsp_type_definitions, "[G]oto [T]ype Definition")
+					end
 
 					local client = vim.lsp.get_client_by_id(event.data.client_id)
 
@@ -30,8 +37,7 @@ return {
 					end
 
 					if client and client:supports_method("textDocument/documentHighlight", event.buf) then
-						local highlight_augroup =
-								vim.api.nvim_create_augroup("random-lsp-highlight", { clear = false })
+						local highlight_augroup = vim.api.nvim_create_augroup("random-lsp-highlight", { clear = false })
 						vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 							buffer = event.buf,
 							group = highlight_augroup,
@@ -78,20 +84,19 @@ return {
 				},
 				rust_analyzer = {},
 				ts_ls = {},
-				lua_ls = {},
 				tailwindcss = {},
-				stylua = {},
 				ruff = {},
 			}
 
-			local ensure_installed = vim.tbl_keys(servers or {})
-			vim.list_extend(ensure_installed, {
-				"lua_ls",
-				"stylua",
-				"ruff",
+			local ensure_installed = {
 				"pyright",
-				"tailwindcss",
-			})
+				"rust-analyzer",
+				"typescript-language-server",
+				"tailwindcss-language-server",
+				"ruff",
+				"lua-language-server",
+				"stylua",
+			}
 
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
