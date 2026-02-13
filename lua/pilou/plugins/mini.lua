@@ -1,45 +1,27 @@
 return {
-	"echasnovski/mini.nvim",
+	"nvim-mini/mini.nvim",
 	config = function()
+		-- Better Around/Inside textobjects
+		--
+		-- Examples:
 		--  - va)  - [V]isually select [A]round [)]paren
 		--  - yinq - [Y]ank [I]nside [N]ext [Q]uote
 		--  - ci'  - [C]hange [I]nside [']quote
 		require("mini.ai").setup({ n_lines = 500 })
 
-		require("mini.icons").setup()
-		require("mini.pairs").setup()
+		-- Add/delete/replace surroundings (brackets, quotes, etc.)
+		--
+		-- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
+		-- - sd'   - [S]urround [D]elete [']quotes
+		-- - sr)'  - [S]urround [R]eplace [)] [']
+		require("mini.surround").setup()
 
 		local statusline = require("mini.statusline")
 		statusline.setup({ use_icons = vim.g.have_nerd_font })
 
-		-- 1. Remove Location (Line & Column)
-		-- We set the function to return an empty string so nothing renders.
+		---@diagnostic disable-next-line: duplicate-set-field
 		statusline.section_location = function()
-			return ""
-		end
-
-		statusline.section_filename = function()
-			local path = vim.fn.expand("%:p:.") -- Path relative to CWD
-			if path == "" then
-				return "[No Name]"
-			end
-
-			local max_width = 30 -- Change this to adjust when truncation happens
-
-			if #path > max_width then
-				local filename = vim.fn.expand("%:t")
-				local available_space = max_width - #filename - 4
-
-				if available_space > 0 then
-					local dir = vim.fn.expand("%:p:.:h")
-					path = string.sub(dir, 1, available_space) .. ".../" .. filename
-				else
-					local keep = math.floor((max_width - 3) / 2)
-					path = string.sub(path, 1, keep) .. "..." .. string.sub(path, -keep)
-				end
-			end
-
-			return path
+			return "%2l:%-2v"
 		end
 	end,
 }

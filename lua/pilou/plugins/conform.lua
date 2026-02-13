@@ -2,32 +2,33 @@ return {
 	"stevearc/conform.nvim",
 	opts = {
 		formatters_by_ft = {
-			cpp = { "clang-format" },
-			css = { "prettier" },
-			html = { "prettier" },
-			javascript = { "biome", "prettier", stop_after_first = true },
-			javascriptreact = { "biome", "prettier", stop_after_first = true },
-			json = { "biome", "prettier" },
 			lua = { "stylua" },
-			markdown = { "prettier" },
-			rust = { "rustfmt", lsp_format = "fallback" },
-			typescript = { "biome", "prettier", stop_after_first = true },
-			typescriptreact = { "biome", "prettier", stop_after_first = true },
+			javascript = { "biome", "prettierd", "prettier", stop_after_first = true },
+			javascriptreact = { "biome", "prettierd", "prettier", stop_after_first = true },
+			typescript = { "biome", "prettierd", "prettier", stop_after_first = true },
+			typescriptreact = { "biome", "prettierd", "prettier", stop_after_first = true },
+			json = { "biome", "prettierd", "prettier", stop_after_first = true },
+			jsonc = { "biome", "prettierd", "prettier", stop_after_first = true },
+			css = { "prettierd", "prettier", stop_after_first = true },
+			markdown = { "prettierd", "prettier", stop_after_first = true },
 			python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
-
-			["_"] = { "trim_whitespace" },
 		},
-		format_on_save = {
-			timeout_ms = 200,
-			lsp_format = "fallback",
-		},
-		notify_no_formatters = true,
 		formatters = {
 			biome = {
-				condition = function(ctx)
-					return vim.fs.find("biome.json", { upward = true, path = ctx.filename })[1] ~= nil
-				end,
+				require_cwd = true,
 			},
 		},
+		format_on_save = function(bufnr)
+			local disable_filetypes = { c = true, cpp = true }
+			if disable_filetypes[vim.bo[bufnr].filetype] then
+				return nil
+			else
+				return {
+					timeout_ms = 500,
+					lsp_format = "fallback",
+				}
+			end
+		end,
+		notify_no_formatters = true,
 	},
 }

@@ -1,39 +1,40 @@
-vim.opt.number = true
-vim.opt.relativenumber = true
+vim.o.number = true
+vim.o.relativenumber = true
 
-vim.opt.mouse = "a"
+vim.o.mouse = "a"
 
-vim.opt.showmode = false
-vim.opt.conceallevel = 1
+vim.o.showmode = false
+
+vim.schedule(function()
+	vim.o.clipboard = "unnamedplus"
+end)
+
+vim.o.breakindent = true
 
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 
-vim.schedule(function()
-	vim.opt.clipboard = "unnamedplus"
-end)
+vim.o.undofile = true
 
-vim.opt.breakindent = true
+vim.o.ignorecase = true
+vim.o.smartcase = true
 
-vim.opt.undofile = true
+vim.o.signcolumn = "yes"
 
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
+vim.o.updatetime = 250
 
-vim.opt.signcolumn = "yes"
+vim.o.timeoutlen = 300
 
-vim.opt.updatetime = 250
+vim.o.splitright = true
+vim.o.splitbelow = true
 
-vim.opt.timeoutlen = 300
-
-vim.opt.splitright = true
-vim.opt.splitbelow = true
-
-vim.opt.list = true
+vim.o.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
-vim.opt.inccommand = "split"
+vim.o.inccommand = "split"
 
-vim.opt.cursorline = true
+vim.o.cursorline = true
 
-vim.opt.scrolloff = 10
+vim.o.scrolloff = 8
+
+vim.o.confirm = true
