@@ -36,6 +36,58 @@ return {
 						client.server_capabilities.hoverProvider = false
 					end
 
+					if client and (client.name == "vtsls" or client.name == "ts_ls") then
+						-- vtsls code actions may return this VS Code-only follow-up command.
+						-- Registering a local no-op handler avoids noisy unsupported-command errors.
+						client.commands = client.commands or {}
+						client.commands["_typescript.didOrganizeImports"] = function() end
+
+						local source_action = function(only)
+							return function()
+								vim.lsp.buf.code_action({
+									apply = true,
+									context = {
+										only = only,
+										diagnostics = {},
+									},
+								})
+							end
+						end
+
+						local lsp_organize_imports = source_action({ "source.organizeImports.ts", "source.organizeImports" })
+						local biome_filetypes = {
+							javascript = true,
+							javascriptreact = true,
+							typescript = true,
+							typescriptreact = true,
+						}
+						local organize_imports = function()
+							local ft = vim.bo[event.buf].filetype
+							if biome_filetypes[ft] then
+								local ok, conform = pcall(require, "conform")
+								if ok then
+									local info = conform.get_formatter_info("biome-organize-imports", event.buf)
+									if info.available then
+										conform.format({
+											bufnr = event.buf,
+											formatters = { "biome-organize-imports" },
+											lsp_format = "never",
+											timeout_ms = 1000,
+										})
+										return
+									end
+								end
+							end
+
+							lsp_organize_imports()
+						end
+
+						map("<leader>co", organize_imports, "Organize Imports")
+						map("<leader>cM", source_action({ "source.addMissingImports.ts" }), "Add Missing Imports")
+						map("<leader>cu", source_action({ "source.removeUnused.ts" }), "Remove Unused Imports")
+						map("<leader>cD", source_action({ "source.fixAll.ts" }), "Fix All TypeScript")
+					end
+
 					if client and client:supports_method("textDocument/documentHighlight", event.buf) then
 						local highlight_augroup = vim.api.nvim_create_augroup("random-lsp-highlight", { clear = false })
 						vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
@@ -83,15 +135,56 @@ return {
 					},
 				},
 				rust_analyzer = {},
-				ts_ls = {},
-				tailwindcss = {},
+				vtsls = {
+					settings = {
+						complete_function_calls = true,
+						vtsls = {
+							autoUseWorkspaceTsdk = true,
+							enableMoveToFileCodeAction = true,
+							experimental = {
+								completion = {
+									enableServerSideFuzzyMatch = true,
+								},
+							},
+						},
+						typescript = {
+							updateImportsOnFileMove = { enabled = "always" },
+							suggest = {
+								autoImports = true,
+								completeFunctionCalls = true,
+							},
+							preferences = {
+								includePackageJsonAutoImports = "on",
+								importModuleSpecifierPreference = "non-relative",
+							},
+						},
+						javascript = {
+							updateImportsOnFileMove = { enabled = "always" },
+							suggest = {
+								autoImports = true,
+								completeFunctionCalls = true,
+							},
+							preferences = {
+								includePackageJsonAutoImports = "on",
+								importModuleSpecifierPreference = "non-relative",
+							},
+						},
+					},
+				},
+				tailwindcss = {
+					settings = {
+						tailwindCSS = {
+							classFunctions = { "cn", "cva", "clsx", "tw", "twMerge" },
+						},
+					},
+				},
 				ruff = {},
 			}
 
 			local ensure_installed = {
 				"pyright",
 				"rust-analyzer",
-				"typescript-language-server",
+				"vtsls",
 				"tailwindcss-language-server",
 				"ruff",
 				"lua-language-server",
