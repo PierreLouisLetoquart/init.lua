@@ -3,7 +3,7 @@ return {
 	lazy = false,
 	build = ":TSUpdate",
 	config = function()
-		local filetypes = {
+		local parsers = {
 			"bash",
 			"c",
 			"diff",
@@ -22,12 +22,31 @@ return {
 			"javascript",
 			"jsdoc",
 			"json",
-			"jsonc",
 			"rust",
 			"xml",
 			"yaml",
 		}
-		require("nvim-treesitter").install(filetypes)
+		require("nvim-treesitter").install(parsers)
+
+		local filetypes = {
+			"bash",
+			"c",
+			"diff",
+			"html",
+			"lua",
+			"markdown",
+			"python",
+			"typescript",
+			"typescriptreact",
+			"javascript",
+			"javascriptreact",
+			"toml",
+			"json",
+			"rust",
+			"xml",
+			"yaml",
+		}
+
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = filetypes,
 			callback = function()
