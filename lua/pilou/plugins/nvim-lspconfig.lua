@@ -5,7 +5,7 @@ return {
 			{ "mason-org/mason.nvim", opts = {} },
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			-- Useful status updates for LSP.
-			{ "j-hui/fidget.nvim",    opts = {} },
+			{ "j-hui/fidget.nvim", opts = {} },
 			-- Allows extra capabilities provided by blink.cmp
 			"saghen/blink.cmp",
 		},
@@ -54,7 +54,8 @@ return {
 							end
 						end
 
-						local lsp_organize_imports = source_action({ "source.organizeImports.ts", "source.organizeImports" })
+						local lsp_organize_imports =
+							source_action({ "source.organizeImports.ts", "source.organizeImports" })
 						local biome_filetypes = {
 							javascript = true,
 							javascriptreact = true,
@@ -122,6 +123,7 @@ return {
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 			local servers = {
+				copilot = { enabled = false }, -- copilot.lua only works with its own copilot lsp server
 				pyright = {
 					settings = {
 						pyright = {
@@ -204,8 +206,8 @@ return {
 					if client.workspace_folders then
 						local path = client.workspace_folders[1].name
 						if
-								path ~= vim.fn.stdpath("config")
-								and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+							path ~= vim.fn.stdpath("config")
+							and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
 						then
 							return
 						end
