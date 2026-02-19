@@ -29,18 +29,10 @@ return {
 		})
 
 		-- Enable TS highlighting for any filetype with a parser installed.
-		-- Falls back to auto-installing the parser if missing.
-		local ignored_filetypes = { oil = true }
-
+		-- Silently no-ops for filetypes without a parser.
 		vim.api.nvim_create_autocmd("FileType", {
 			callback = function()
-				if ignored_filetypes[vim.bo.filetype] then
-					return
-				end
-				if not pcall(vim.treesitter.start) then
-					local lang = vim.treesitter.language.get_lang(vim.bo.filetype) or vim.bo.filetype
-					require("nvim-treesitter").install({ lang })
-				end
+				pcall(vim.treesitter.start)
 			end,
 		})
 	end,
