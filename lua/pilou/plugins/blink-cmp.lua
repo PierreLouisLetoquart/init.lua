@@ -46,6 +46,7 @@ return {
 		},
 		completion = {
 			documentation = { auto_show = false, auto_show_delay_ms = 500 },
+			menu = { border = "rounded" },
 		},
 		sources = {
 			default = { "lsp", "path", "snippets" },
@@ -53,6 +54,6 @@ return {
 		snippets = { preset = "luasnip" },
 		-- See :h blink-cmp-config-fuzzy for more information
 		fuzzy = { implementation = "prefer_rust_with_warning" },
-		signature = { enabled = true },
+		signature = { enabled = true, window = { border = "rounded" } },
 	},
 }

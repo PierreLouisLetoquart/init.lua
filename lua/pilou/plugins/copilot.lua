@@ -5,7 +5,7 @@ return {
 	event = "InsertEnter",
 	opts = {
 		suggestion = {
-			enabled = not vim.g.ai_cmp,
+			enabled = true,
 			auto_trigger = true,
 			hide_during_completion = false,
 			keymap = {

@@ -14,6 +14,11 @@ return {
 					transparent = false,
 					solid = true,
 				},
+				integrations = {
+					blink_cmp = {
+						style = "bordered",
+					},
+				},
 			})
 			vim.cmd.colorscheme("catppuccin")
 		end,

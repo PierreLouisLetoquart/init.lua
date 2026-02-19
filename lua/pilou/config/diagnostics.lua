@@ -6,7 +6,7 @@ vim.diagnostic.config({
 
 	-- Can switch between these
 	virtual_text = true, -- Text shows up at the end of the line
-	virtual_lines = false, -- Teest shows up underneath the line, with virtual lines
+	virtual_lines = false, -- Text shows up underneath the line, with virtual lines
 
 	-- Jumping with `[d` and `]d`
 	jump = { float = true },
