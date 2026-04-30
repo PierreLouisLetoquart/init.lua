@@ -11,6 +11,7 @@ return {
 			"query",
 			"bash",
 			"c",
+			"cpp",
 			"diff",
 			"html",
 			"css",

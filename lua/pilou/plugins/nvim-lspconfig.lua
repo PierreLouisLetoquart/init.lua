@@ -124,6 +124,7 @@ return {
 
 			local servers = {
 				copilot = { enabled = false }, -- copilot.lua only works with its own copilot lsp server
+				clangd = {},
 				pyright = {
 					settings = {
 						pyright = {
@@ -184,6 +185,7 @@ return {
 			}
 
 			local ensure_installed = {
+				"clangd",
 				"pyright",
 				"rust-analyzer",
 				"vtsls",
